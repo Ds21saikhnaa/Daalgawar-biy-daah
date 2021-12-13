@@ -1,9 +1,9 @@
 let hide = document.getElementById('hide');
-let check = document.getElementsByClassName('check');
+let navbar = document.getElementById("navbar");
+let link = document.querySelectorAll('link')
 
-
+console.log(link)
 function hideMenu() {
     console.log('hello');
-    check.classList.toggle('show');
-
+    navbar.classList.add('show');
 }
