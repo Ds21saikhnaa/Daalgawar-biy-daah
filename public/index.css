@@ -225,10 +225,9 @@ body {
 
 .layOut {
   height: 70%;
-  width: 380px;
+  width: 320px;
   background-color: #00b2ff;
   margin-left: 20px;
-  font-size: 13px;
 }
 
 @media only screen and (max-width: 1000px) {
