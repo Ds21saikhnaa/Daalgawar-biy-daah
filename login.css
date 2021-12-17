@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Text{
+    height: 35%;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+.container>input{
+    height: 30px;
+    width: 70%;
+}
+.a{
+    height: 30px;
+    width: 40%;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.a>button{
+    height: 100%;
+    width: 40%;
+}
