@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="name"><h1>Welcome to Selfbook</h1></div>
+        <div class="signUp">
+            <input class="userName" type="text" id="userName" placeholder="Username">
+            <input class="phone" type="number" id="phone" placeholder="phone number">
+            <button onclick="clickSub()">send to code</button>
+            <input class="ver" type="number" id="ver" placeholder="ver Code">
+            <button onclick="clickLogIn()">log In</button>
+        </div>
+    </div>
+</body>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="./firebase.js"></script>
+<script src="./login.js"></script>
+</html>
