@@ -10,6 +10,10 @@ const asuult = (type, callback) => {
         callback(ask);
     });
 };
+
+const qa = () => {
+    
+}
 const showCurrentTime = (date, callback1) => {
     rl.question(date, (ask1) => {
         callback1(ask1);
