@@ -33,13 +33,14 @@ const arra = (n) => {
   n.forEach((cur) => {
     if (typeof cur === 'object') {
          console.log(cur);
+         
     } else {
         console.log(cur);
     }
   });
 
   //if (!n.length) return n;
-  return n.toString();
+  //return n.toString();
 };
 
 
