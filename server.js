@@ -3,7 +3,8 @@ import fs from "fs";
 import path from "path";
 import urlMa from "url";
 
-const server = http.createServer((req, res) => {
+  const server = http.createServer((req, res) => {
+  req.query_params
   const { headers, url, method } = req;
   res.setHeader("content-type", "text/html");
   if (url === "/") {
