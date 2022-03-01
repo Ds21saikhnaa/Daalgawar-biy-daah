@@ -68,4 +68,5 @@ const users = [
     { id: 47, name: 'Bold', age: 28, group: 'admin' },
     { id: 85, name: 'Tulga', age: 34, group: 'editor' },
     { id: 97, name: 'Suren', age: 28, group: 'admin' }
-];  
+];
+  
