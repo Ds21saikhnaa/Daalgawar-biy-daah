@@ -1,11 +1,19 @@
-//const testPromise = (data) => {
-let myPromise = new Promise((res, rej) => {
-        let data = '';
-        if (data % 2 === 0) rej('even');
-        else if (data % 2 !== 0) res('odd');
-        else rej('error');
-    })
-    // }
+const testPromise = (data) => {
+    return new Promise((res, rej) => {
+        if (typeof data !== 'number'){
+            rej('error');
+        } 
+        if (data % 2 === 0) {
+            setTimeout(() => {
+                rej('even');
+            }, 2000)
+        }if (data % 2 !== 0) {
+            setTimeout(() =>{
+                res('odd');
+            })
+        }
+        })
+}
     //testPromise(Math.floor(Math.random() * 100))
 myPromise.then((result) => {
     console.log(result);
