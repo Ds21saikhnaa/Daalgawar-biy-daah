@@ -1,5 +1,7 @@
-import axios from "axios";
-import readline from "readline";
+// import axios from "axios";
+// import readline from "readline";
+const axios = require("axios");
+const readline = require("readline");
 let rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -7,7 +9,6 @@ let rl = readline.createInterface({
 const convertFtoC = ($f) => {
     return ($f - 32) * (5 / 9);
 };
-
 const logNow = (ob) => {
     const f = ob.currently.temperature;
     const preProbability = Math.round(ob.currently.precipProbability * 100);
@@ -45,11 +46,6 @@ const logHourly = (arr) => {
         );
     }
 };
-
-
-
-
-
 rl.question("gazriin neree oruulna uu: ", async(loca) => {
     const res = await axios.get(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${loca.toString()}.json?access_token=pk.eyJ1Ijoic2Fpa2hhbmJpbGVnIiwiYSI6ImNsMGFyaGs2NTAxM20za3A0cWFxMzd5YWMifQ.Gabbw102QC01jkqp0R1VmQ`
@@ -62,12 +58,12 @@ rl.question("gazriin neree oruulna uu: ", async(loca) => {
       }`
         );
     });
-    rl.question("zow haygaa songo1: ", async(choice) => {
+    rl.question("zow haygaa songo: ", async(choice) => {
         let weather;
         let weather1 = `https://api.darksky.net/forecast/81d38b9c958eb018e01083a72b0926b5/${arr[choice - 1].center[1]},${arr[choice - 1].center[0]}`;
         try {
             weather = await axios.get(weather1)
-                //console.log(weather.data.currently);
+            console.log(weather.data.currently);
         } catch (e) {
             console.log(e);
         }
