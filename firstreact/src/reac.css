@@ -1,0 +1,11 @@
+.Tab{
+    border: 1px solid black;
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+}
+.Tr{
+    height: 30px;
+    width: 30px;
+    border: 1px solid black;   
+}
