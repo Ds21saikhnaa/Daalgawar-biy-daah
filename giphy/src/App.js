@@ -4,7 +4,9 @@ import { Giphy } from './Giphys/AxiGiphy'
 function App() {
   return (
     <div className="App">
-      < Giphy />
+      <div className='Container'>
+        < Giphy />
+      </div>
     </div>
   );
 }

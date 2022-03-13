@@ -1,5 +1,8 @@
-import React, { useState , useEffect, useRef} from 'react'
-
+import React, { useState} from 'react'
+import { db } from '../firebase';
+import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+// import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+//import firebase from "firebase" 
 function TodoForm(props) {
   const [input, setInput] = useState(props.edit ? props.edit.value : '');
 
@@ -9,6 +12,23 @@ function TodoForm(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
+    async function getCities(db) {
+      const citiesCol = collection(db, 'todos');
+      const citySnapshot = await getDocs(citiesCol);
+      const cityList = citySnapshot.docs.map(doc => doc.data({
+        inProgress: true, 
+        todo: input
+      }));
+      return cityList;
+  }
+  // getCities(db).collection("todos").add({
+  //   inProgress: true,
+  //     todo: input
+  // })
+    // db.collection("todos").add({
+    //   inProgress: true,
+    //   todo: input
+    // });
 
     props.onSubmit({
       id: Math.floor(Math.random() * 10000),
