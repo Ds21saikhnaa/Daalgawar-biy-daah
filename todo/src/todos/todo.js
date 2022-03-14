@@ -1,7 +1,12 @@
 import {useState, useEffect} from 'react'
 import {TodoForm} from './todoForm.js';
 import { db } from '../firebase';
-const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
+const Todo = ({sd,id, inprogress,todos, completeTodo, removeTodo, updateTodo }) => {
+  // const toggleInProgress = () => {
+  //   db.collection("todos").doc(id).update({
+  //     inprogress: !inprogress,
+  //   });
+  // }
     const [edit, setEdit] = useState({
       id: null,
       value: ''
@@ -10,6 +15,7 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
     const submitUpdate = value => {
       updateTodo(edit.id, value);
       setEdit({
+        edit: false,
         id: null,
         value: ''
       });
@@ -31,6 +37,8 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
             <span onClick={() => removeTodo(todo.id)} className='delete-icon'>x</span>
             <span>                                                                 </span>
             <span onClick={() => setEdit({ id: todo.id, value: todo.todo })} className='edit-icon'>edit</span>
+            <span>                                                                 </span>
+            <span onClick={sd} className='done-icon'>done</span>
         </div>
       </div>
     ));

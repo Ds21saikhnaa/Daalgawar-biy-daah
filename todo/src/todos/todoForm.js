@@ -1,8 +1,8 @@
 import React, { useState} from 'react'
 import { db } from '../firebase';
+let edit = true
 function TodoForm(props) {
   const [input, setInput] = useState(props.edit ? props.edit.value : '');
-
   const handleChange = e => {
     setInput(e.target.value);
   };
@@ -10,11 +10,13 @@ function TodoForm(props) {
   const handleSubmit = e => {
     let dateNow = new Date();
     e.preventDefault();
-    db.collection("todos").add({
-      inProgress: true,
-      todo: input,
-      createdAt: dateNow,
-    });
+    if(edit){
+      db.collection("todos").add({
+        inprogress: true,
+        todo: input,
+        createdAt: dateNow,
+      });
+    }
     props.onSubmit({
       id: Math.floor(Math.random() * 10000),
       text: input
