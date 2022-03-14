@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {TodoForm} from './todoForm.js';
-
+import { db } from '../firebase';
 const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
     const [edit, setEdit] = useState({
       id: null,
@@ -25,12 +25,12 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
         key={index}
       >
         <div key={todo.id} onClick={() => completeTodo(todo.id)}>
-          {todo.text}
+          {todo.todo}
         </div>
         <div className='Icons'>
             <span onClick={() => removeTodo(todo.id)} className='delete-icon'>x</span>
             <span>                                                                 </span>
-            <span onClick={() => setEdit({ id: todo.id, value: todo.text })} className='edit-icon'>edit</span>
+            <span onClick={() => setEdit({ id: todo.id, value: todo.todo })} className='edit-icon'>edit</span>
         </div>
       </div>
     ));

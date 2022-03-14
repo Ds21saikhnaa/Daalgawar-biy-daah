@@ -1,12 +1,27 @@
-import React, {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {TodoForm} from './todoForm.js';
 import {Todo} from './todo';
+import { db } from '../firebase';
 
 function TodoList() {
-    const [todos, setTodos] = useState([]);
-  
+    //const [todos, setTodos] = useState([]);
+    const [todos, setTodos] = useState([])
+    useEffect(() => {
+      const listenData = (snapshot) => {
+        console.log('das');
+        const myDocs = snapshot.docs.map((doc) => {
+          return{
+            id: doc.id,
+            createdAt: doc.createdAt,
+            ...doc.data()
+          }
+        })
+        setTodos(myDocs)
+      }
+      return db.collection('todos').orderBy("createdAt", "desc").onSnapshot(listenData)
+    },[])
     const addTodo = todo => {
-      if (!todo.text || /^\s*$/.test(todo.text)) {
+      if (!todo.todo || /^\s*$/.test(todo.todo)) {
         return;
       }
   
@@ -25,15 +40,13 @@ function TodoList() {
     };
   
     const removeTodo = id => {
-      const removedArr = [...todos].filter(todo => todo.id !== id);
-  
-      setTodos(removedArr);
+      db.collection("todos").doc(id).delete();
     };
   
     const completeTodo = id => {
       let updatedTodos = todos.map(todo => {
         if (todo.id === id) {
-          todo.isComplete = !todo.isComplete;
+          todo.isComplete = !todo.isColete;
         }
         return todo;
       });
