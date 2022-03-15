@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Choice from "./choiceMap";
 const axios = require("axios");
 const debounce = (fn, delay) => {
   let timeOut;
@@ -40,11 +41,13 @@ const Weather = () => {
   };
   const renderGifs = () => {
     return data.map((element, index) => {
-      return <div style={{ display: "flex", flexDirection:"row" }}key={index}>
-          <button>{index}</button>
-          <p>
-          {element.place_name}</p>
-      </div>;
+      return (
+      <>
+         <div style={{ display: "flex", flexDirection:"row" }}key={index}>
+      <><Choice name={element.place_name} center={element.center} index={index}/></>
+      </div>
+      </>
+      )
     });
   };
   return (
