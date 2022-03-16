@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Choice from "./choiceMap";
+import "../App.css";
 const axios = require("axios");
 const debounce = (fn, delay) => {
   let timeOut;
@@ -13,6 +14,7 @@ const debounce = (fn, delay) => {
 const Weather = () => {
   const [word, setWord] = useState("");
   const [data, setData] = useState([]);
+  const [flag, setflag] = useState(true);
   const pull = async (q) => {
     if (!q) return;
     const res = await axios.get(
@@ -26,15 +28,17 @@ const Weather = () => {
     return debounce(pull, 1000);
   });
   useEffect(() => {
-    //pull()
     fetchGifsDebounced(word);
   }, [word, setFetchGifsDebounced]);
   const handInput = (e) => {
     setWord(e.target.value);
   };
+  const clickBtn = () => {
+    setflag(!flag);
+  };
   const In = () => {
     return (
-      <div>
+      <div className="Head">
         <input value={word} onChange={handInput} />
       </div>
     );
@@ -42,17 +46,27 @@ const Weather = () => {
   const renderGifs = () => {
     return data.map((element, index) => {
       return (
-      <>
-         <div style={{ display: "flex", flexDirection:"row" }}key={index}>
-      <><Choice name={element.place_name} center={element.center} index={index}/></>
-      </div>
-      </>
-      )
+        <>
+          <div style={{ display: "flex", flexDirection: "column" }} key={index}>
+            <>
+              <Choice
+                name={element.place_name}
+                center={element.center}
+                index={index}
+              />
+            </>
+            {/* <div>
+          <h3>{element.place_name}</h3>
+          <button onClick={clickBtn}>Weather</button>
+        </div> */}
+          </div>
+        </>
+      );
     });
   };
   return (
     <div className="NavBar">
-      <div >{In()}</div>
+      <div>{In()}</div>
       <div className="Row">{renderGifs()}</div>
     </div>
   );

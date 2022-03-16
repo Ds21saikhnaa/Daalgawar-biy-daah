@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
-import Country from './ren'
+import Render from './ren'
 function Choice({name, center, index}){
-    const [bool, setbool] = useState(true)
+    const [flag, setflag] = useState(true)
     const [info, setinfo] = useState([])
     useEffect(() => {
         const darksky = async () => {
@@ -12,25 +12,26 @@ function Choice({name, center, index}){
         }
         darksky()
     }, [])
-    const clickb = () => {
-        setbool(!bool);
+    const clickBtn = () => {
+        setflag(!flag);
     }
-    if (!bool) {
+    console.log(flag);
+    if (!flag) {
         return (
-            // time, summary, icon, temperatureHigh, temperatureLow
             <div className='flex container'>
+                <h1>{name}</h1>
                 {info.map(( element, index ) => {
-                    console.log(index);
-                    return <Country key={index} time={element.time} summary={element.summary} icon={element.icon} temperatureHigh={element.temperatureHigh} temperatureLow={element.temperatureLow} />
+                    console.log(element);
+                    return <Render key={index} time={element.time} summary={element.summary} icon={element.icon} temperatureHigh={element.temperatureHigh} temperatureLow={element.temperatureLow} />
                 })}
             </div>
         )
     } else {
-        return (
+        return(
             <div
-                className='flex'>
+                className='flex' key={index}>
                 <div>{index+1}.{name}</div>
-                <button onClick={clickb}>Weather</button>;
+                <button onClick={clickBtn}>Weather</button>;
             </div>
         );
     }
