@@ -1,3 +1,5 @@
+
+import WeatherIcon from 'react-icons-weather';
 function Render({ time, summary, icon, temperatureHigh, temperatureLow }) {
     let timezo = new Date(time * 1000)
     const c = ((temperatureHigh - 32) * 5 / 9)
@@ -16,6 +18,7 @@ function Render({ time, summary, icon, temperatureHigh, temperatureLow }) {
                     {timezo?.getDay() === 6 ? "Saturday" : false}
                     {timezo?.getDay() === 0 ? "Sunday" : false}
                 </h3>
+                <WeatherIcon name="darksky" iconId={icon} flip="horizontal" className="images" rotate="90" />
                  <div className='text'> {`${rounded}C`}/{`${lowrounded}C`} </div>
                 <div className='text'>{summary}</div>
                 <div className='text'>{icon}</div>
