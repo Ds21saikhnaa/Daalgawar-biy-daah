@@ -1,20 +1,20 @@
-import Input from './component/input';
-import './App.css';
-import axios from 'axios'
-import {useState, useEffect} from "react"
-import Get from './component/render';
+import Input from "./component/input";
+import "./App.css";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Get from "./component/render";
 function App() {
-  const [word, setWord] = useState('');
+  const [word, setWord] = useState("");
   const [data, setData] = useState([]);
   const [click, setClick] = useState([]);
   const target = (e) => {
-    setWord(e.target.value)
-  } 
+    setWord(e.target.value);
+  };
   const onClick = () => {
-    setClick(word)
-    setWord('');
+    setClick(word);
+    setWord("");
     console.log("hello");
-  }
+  };
   useEffect(() => {
     const pull = async () => {
       const res = await axios.get(
@@ -23,18 +23,21 @@ function App() {
       const arr = Object.values(res.data.features);
       setData(arr);
     };
-    pull()
-  }, [click])
+    pull();
+  }, [click]);
   return (
     <div className="App">
       <h1>Weather</h1>
-      <Input valiu={word} target={target} onClick={onClick}/>
-      <div className='Container'>
-        {data.map((element, index) => {
-          return(
-              <><Get name={element.place_name} center={element.center} index={index}/></>
-          )
-        })}
+      <Input valiu={word} target={target} onClick={onClick} />
+      <div className="Container">
+        {data.map((element, index) => (
+          <Get
+            key={index}
+            name={element.place_name}
+            center={element.center}
+            index={index}
+          />
+        ))}
       </div>
     </div>
   );
