@@ -3,14 +3,19 @@
   width: 100vw;
   display: flex;
   text-align: center;
-  justify-content: center;
-  background-image: url(https://wallpapercave.com/wp/wp2035107.jpg);
-  background-size: 100% 100%;
+  flex-direction: column;
 
 }
-
-.Head > input{
-  height: 40px;
-  width: 200px;
-  border-radius: 30px;
+.Cart{
+  display: flex;
+  flex-direction: row;
+  margin-left: 5px;
+  flex-direction: column;
+}
+.See{
+  width: 300px;
+  height: 300px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 }
