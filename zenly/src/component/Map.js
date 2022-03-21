@@ -1,32 +1,59 @@
-import React, { useEffect, useRef, useState } from 'react'
-export default function Map({ options, onMount, className, onMountProps }) {
-  const ref = useRef()
-  const key = 'AIzaSyAB6cL647DSIoabnPLSSGcaV9oqy4dulzY'
-  const [map, setMap] = useState()
+import { useEffect, useRef, useState } from 'react';
+import { collection, addDoc } from "firebase/firestore"; 
+
+const markers = [
+    {
+        lat: 47.9119453,
+        lng: 106.8983796,
+    },
+    {
+        lat: 47.9138608,
+        lng: 106.912096,
+    }
+]
+const Map = () => {
+  const mapContainerRef = useRef();
+  const mapRef = useRef();
+  const [ makerIndex, setMakerIndex ] = useState(0);
+  const [loc, setLoc] = useState([])
+  const loca = useRef([])
+  // const da = async() =>{
+  //   const docRef = await addDoc(collection(db, "users"), {
+  //     first: "Ada",
+  //     last: "Lovelace",
+  //     born: 1815
+  //   });
+  //   console.log("Document written with ID: ", docRef.id);
+  // } catch (e) {
+  //   console.error("Error adding document: ", e);
+  // }
   useEffect(() => {
-    const onLoad = () => setMap(new window.google.maps.Map(ref.current, options))
-    if (!window.google) {
-      const script = document.createElement(`script`)
-      script.src =
-        `https://maps.googleapis.com/maps/api/js?keyAIzaSyAB6cL647DSIoabnPLSSGcaV9oqy4dulzY` +
-        //process.env.GOOGLE_MAPS_API_KEY
-      document.head.append(script)
-      script.addEventListener(`load`, onLoad)
-      return () => script.removeEventListener(`load`, onLoad)
-    } else onLoad()
-  }, [options])
-  if (map && typeof onMount === `function`) onMount(map, onMountProps)
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLoc([position.coords.latitude, position.coords.longitude])
+    });
+    console.log(loc);
+      mapRef.current = new window.google.maps.Map(mapContainerRef.current, {
+        //center: {lat: 50, lng: 100},  
+        center: {lat: loc[0], lng: loc[1]},
+        zoom: 14,
+      });
+  }, []);
+
+  const onAddMarker = () => {
+      new window.google.maps.Marker({
+          position: markers[makerIndex],
+          map: mapRef.current,
+      });
+      setMakerIndex(makerIndex + 1);
+  }
   return (
-    <div
-      style={{ height: `60vh`, margin: `1em 0`, borderRadius: `0.5em` }}
-      {...{ ref, className }}
-    />
+      <div>
+          Zenly
+          <button onClick={ onAddMarker }>Add Markers</button>
+          <div id="map" ref={ mapContainerRef }></div>
+      </div>
   )
 }
-Map.defaultProps = {
-  options: {
-    center: { lat: 50, lng: 100 },
-    zoom: 5,
-  },
+export{
+  Map
 }
-
