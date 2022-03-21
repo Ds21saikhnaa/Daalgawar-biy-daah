@@ -11,4 +11,6 @@ const firebaseConfig = {
 };
 // firebase.auth().languageCode = 'mn';
 firebase.initializeApp(firebaseConfig);
-export default firebase;
+
+export const auth = firebase.auth();
+export default firebase 

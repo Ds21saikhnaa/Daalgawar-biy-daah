@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react'
 import {useRef, useState, useEffect} from 'react'
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
-import firebase from './Firebase';
+import firebase, { auth } from './Firebase';
 // import Map from './component/Map'; 
 function App() {
   // const ref = useRef(null);
