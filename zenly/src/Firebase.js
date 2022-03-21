@@ -1,6 +1,5 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore'
-import 'firebase/auth'
+import { initializeApp } from 'firebase/app';
+import { getAuth } from "firebase/auth";
 const firebaseConfig = {
     apiKey: "AIzaSyAoTue1dMEG3-2BRYfVVSZmdztptEZzTn8",
     authDomain: "reactzenly.firebaseapp.com",
@@ -9,8 +8,5 @@ const firebaseConfig = {
     messagingSenderId: "783302204725",
     appId: "1:783302204725:web:fc8ec7b41bdc0b2ce1007c"
 };
-// firebase.auth().languageCode = 'mn';
-firebase.initializeApp(firebaseConfig);
-
-export const auth = firebase.auth();
-export default firebase 
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
