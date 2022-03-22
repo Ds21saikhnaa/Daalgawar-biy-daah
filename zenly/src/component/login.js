@@ -11,7 +11,7 @@ const Login = () => {
     }, [])
     const onClickLogin = async () => {
         const auth = getAuth();
-        const phoneNumber = value;
+        const phoneNumber = `+976${value}`;
         confirmationResult.current = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier.current);
         setValue('');
         setFlag(false);
