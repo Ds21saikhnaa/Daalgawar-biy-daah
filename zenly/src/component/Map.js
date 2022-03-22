@@ -5,6 +5,7 @@ import {
   doc,
   onSnapshot,
   getDocs,
+  query,
 } from "firebase/firestore";
 import { db, auth } from "../Firebase";
 
@@ -26,7 +27,7 @@ const Map = () => {
   const loca = useRef([]);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
+    navigator.geolocation.watchPosition((position) => {
       setLoc([position.coords.latitude, position.coords.longitude]);
       const da = async () => {
         const citiesRef = collection(db, "current-loctaion");
@@ -45,36 +46,22 @@ const Map = () => {
     if (!loc.length) return;
     mapRef.current = new window.google.maps.Map(mapContainerRef.current, {
       center: { lat: loc[0], lng: loc[1] },
-      zoom: 14,
+      zoom: 5,
     });
     new window.google.maps.Marker({
       position: { lat: loc[0], lng: loc[1] },
       map: mapRef.current,
     });
-  }, [loc]);
-  // const unsub = onSnapshot(doc(db, "current-loctaion", auth.currentUser.uid), (doc) => {
-  //   const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
-  //   console.log(" data: ", doc.data());
-  // });
-  // useEffect(() => {
-  //   unsub();
-  // }, []);
-  const a = async () => {
-    const querySnapshot = await getDocs(collection(db, "current-loctaion"));
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
+    const coll = collection(db, "current-loctaion");
+    const q = query(coll)
+    onSnapshot(q, (snapshot) => {
+      let data = snapshot.docChanges()
       new window.google.maps.Marker({
-        position: { lat: doc.data().lat, lng: doc.data().lgn },
+        position: { lat: data[0].doc.data().lat, lng: data[0].doc.data().lgn },
         map: mapRef.current,
       })
-    });
-  };
-  // const unsubscribe = onSnapshot(collection(db, "current-loctaion"), (doc) => {
-  //   console.log(db.do);
-  // });
-  useEffect(() => {
-    a();
-  }, []);
+    })
+  }, [loc]);
 
   const onAddMarker = () => {
     new window.google.maps.Marker({
