@@ -4,10 +4,9 @@ import {
   setDoc,
   doc,
   onSnapshot,
-  getDocs,
-  query,
 } from "firebase/firestore";
-import { db, auth } from "../Firebase";
+import { db, auth, out } from "../Firebase";
+import { logout, signOut } from "firebase/auth";
 
 const markers = [
   {
@@ -22,6 +21,7 @@ const markers = [
 const Map = () => {
   const mapContainerRef = useRef();
   const mapRef = useRef();
+  const [logout, setLogout] = useState(false)
   const [makerIndex, setMakerIndex] = useState(0);
   const [loc, setLoc] = useState([]);
   const loca = useRef([]);
@@ -70,10 +70,16 @@ const Map = () => {
     });
     setMakerIndex(makerIndex + 1);
   };
+  const logOut = async() => {
+    await signOut(auth)
+  } 
   return (
-    <div>
-      Zenly app
-      <button onClick={onAddMarker}>Add Markers</button>
+    <div className="Container">
+      <h1>Zenly app</h1>
+      <div className="helper">
+        <button onClick={onAddMarker}>Add Markers</button>
+        <button onClick={logOut}>logOut</button>
+      </div>
       <div id="map" ref={mapContainerRef}></div>
     </div>
   );

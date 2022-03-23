@@ -11,3 +11,214 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.Container{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background-image: radial-gradient(#0f5bb1, #06274d);
+}
+.helper{
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  align-items: center;
+}
+.helper>button{
+  border-radius: 5px;
+  color: red;
+  background-color: #52fefe;
+}
+.logCon{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  background-image: url(https://www.cheatsheet.com/wp-content/uploads/2021/11/Iron-Man-Marvel-Anime-Avengers-Age-of-Ultron.jpg);
+  background-size: 100% 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.miniLog{
+  display: flex;
+  height: 300px;
+  width: 300px;
+  background-image:url(https://tvmedia.ign.com/tv/image/article/870/870971/iron-man-20100504095544184.jpg) ;
+  border-radius: 30px;
+  justify-content: center;
+  margin-right: 200px;
+}
+.input>input{
+  border-radius: 5px;
+}
+.input>button{
+  border-radius: 5px;
+}
+.reactor-container {
+  height: 340px;
+  width: 340px;
+  border: 1px dashed #888;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #384c50;
+  border: 1px solid rgb(18, 20, 20);
+  box-shadow: 0px 0px 32px 8px rgb(18, 20, 20), 0px 0px 4px 1px rgb(18, 20, 20) inset;
+}
+
+.core-inner {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0px 0px 7px 5px #52fefe, 0px 0px 10px 10px #52fefe inset;
+}
+
+.core-outer {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 20px solid #52fefe;
+  background-color: rgb(19, 17, 17);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  box-shadow: 0px 0px 2px 1px #52fefe, 0px 0px 10px 5px #52fefe;
+}
+
+.core-wrapper {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  background-color: #073c4b;
+  box-shadow: 0px 0px 2px 1px #52fefe, 0px 0px 10px 5px #52fefe inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tunnel {
+  width: 260px;
+  height: 260px;
+  border: 8px solid #222931;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px 1px #52fefe, 0px 0px 5px 4px #52fefe inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coil-1 {
+  transform: rotate(0 deg);
+  position: absolute;
+  width: 40px;
+  height: 29px;
+  top: calc(50% - 130px);
+  left: calc(50% - 17px);
+  transform-origin: 17px 130px;
+  background-color: #073c4b;
+  box-shadow: 0px 0px 5px #52fefe inset;
+  ;
+}
+
+.coil-2 {
+  transform: rotate(45deg);
+  position: absolute;
+  width: 40px;
+  height: 29px;
+  top: calc(50% - 130px);
+  left: calc(50% - 17px);
+  transform-origin: 17px 130px;
+  background-color: #073c4b;
+  box-shadow: 0px 0px 5px #52fefe inset;
+}
+
+.coil-3 {
+  transform: rotate(90deg);
+  position: absolute;
+  width: 40px;
+  height: 29px;
+  top: calc(50% - 130px);
+  left: calc(50% - 17px);
+  transform-origin: 17px 130px;
+  background-color: #073c4b;
+  box-shadow: 0px 0px 5px #52fefe inset;
+}
+
+.coil-4 {
+  transform: rotate(135deg);
+  position: absolute;
+  width: 40px;
+  height: 29px;
+  top: calc(50% - 130px);
+  left: calc(50% - 17px);
+  transform-origin: 17px 130px;
+  background-color: #073c4b;
+  box-shadow: 0px 0px 5px #52fefe inset;
+}
+
+.coil-5 {
+  transform: rotate(180deg);
+  position: absolute;
+  width: 40px;
+  height: 29px;
+  top: calc(50% - 130px);
+  left: calc(50% - 17px);
+  transform-origin: 17px 130px;
+  background-color: #073c4b;
+  box-shadow: 0px 0px 5px #52fefe inset;
+}
+
+.coil-6 {
+  transform: rotate(225deg);
+  position: absolute;
+  width: 40px;
+  height: 29px;
+  top: calc(50% - 130px);
+  left: calc(50% - 17px);
+  transform-origin: 17px 130px;
+  background-color: #073c4b;
+  box-shadow: 0px 0px 5px #52fefe inset;
+}
+
+.coil-7 {
+  transform: rotate(270deg);
+  position: absolute;
+  width: 40px;
+  height: 29px;
+  top: calc(50% - 130px);
+  left: calc(50% - 17px);
+  transform-origin: 17px 130px;
+  background-color: #073c4b;
+  box-shadow: 0px 0px 5px #52fefe inset;
+}
+
+.coil-8 {
+  transform: rotate(315deg);
+  position: absolute;
+  width: 40px;
+  height: 29px;
+  top: calc(50% - 130px);
+  left: calc(50% - 17px);
+  transform-origin: 17px 130px;
+  background-color: #073c4b;
+  box-shadow: 0px 0px 5px #52fefe inset;
+}
+
+@keyframes reactor-anim {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+.coil-container {
+  position: fixed;
+  animation: 3s infinite linear reactor-anim;
+}
