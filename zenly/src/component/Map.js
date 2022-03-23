@@ -43,26 +43,26 @@ const Map = () => {
   }, []);
   
   useEffect(() => {
-    if (!loc.length) return;
     mapRef.current = new window.google.maps.Map(mapContainerRef.current, {
       center: { lat: loc[0], lng: loc[1] },
       zoom: 5,
     });
-    new window.google.maps.Marker({
-      position: { lat: loc[0], lng: loc[1] },
-      map: mapRef.current,
-    });
-    const coll = collection(db, "current-loctaion");
-    const q = query(coll)
-    onSnapshot(q, (snapshot) => {
-      let data = snapshot.docChanges()
-      new window.google.maps.Marker({
-        position: { lat: data[0].doc.data().lat, lng: data[0].doc.data().lgn },
-        map: mapRef.current,
+    let arr = [];
+    if (!loc.length) return;
+    onSnapshot(collection(db, "current-loctaion"), (snapshot) => {
+      console.log(snapshot.docs);
+      arr.forEach((el) => {
+        el.setMap(null)
       })
-    })
+      snapshot.docs.forEach((doc) => {
+        let a = new window.google.maps.Marker({
+          position: { lat: doc.data().lat, lng: doc.data().lgn },
+          map: mapRef.current,
+        });
+        arr.push(a)
+      });
+    });
   }, [loc]);
-
   const onAddMarker = () => {
     new window.google.maps.Marker({
       position: markers[makerIndex],
