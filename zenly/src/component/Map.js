@@ -1,18 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { collection, setDoc, doc, onSnapshot } from "firebase/firestore";
+import { collection, setDoc, doc, onSnapshot, addDoc, query, orderBy } from "firebase/firestore";
 import { db, auth } from "../Firebase";
 import { signOut } from "firebase/auth";
-
-const markers = [
-  {
-    lat: 47.9119453,
-    lng: 106.8983796,
-  },
-  {
-    lat: 47.9138608,
-    lng: 106.912096,
-  },
-];
+import { async } from "@firebase/util";
 const icons = {
   me: {
     url:
@@ -28,8 +18,10 @@ const icons = {
 const Map = () => {
   const mapContainerRef = useRef();
   const mapRef = useRef();
-  const [makerIndex, setMakerIndex] = useState(0);
+  const [flag, setFlag] = useState(false);
   const [loc, setLoc] = useState([47.9138608, 106.912096]);
+  const [text, setText] = useState('')
+  const [chats, setChats] = useState([])
 
   useEffect(() => {
     navigator.geolocation.watchPosition(async (position) => {
@@ -43,8 +35,8 @@ const Map = () => {
         id: auth.currentUser.uid,
       });
     });
-  }, []);
-
+  }, [setLoc]);
+  
   useEffect(() => {
     let arr = [];
     if (!loc.length) return;
@@ -68,24 +60,69 @@ const Map = () => {
   }, [loc]);
 
   const onAddMarker = () => {
-    new window.google.maps.Marker({
-      position: markers[makerIndex],
-      map: mapRef.current,
-    });
-    setMakerIndex(makerIndex + 1);
+    // mapRef.current = new window.google.maps.Map(mapContainerRef.current, {
+    //   center: { lat: loc[0], lng: loc[1] },
+    //   zoom: 5,
+    // });
+    console.log('j');
   };
-
+  const chat = () => {
+    setFlag(!flag)
+  }
   const logOut = async () => {
     await signOut(auth);
   };
 
+  const write =  (e) => {
+    e.preventDefault();
+    setText(e.target.value);
+  }
+  const send = async() => {
+    let dateNow = new Date();
+    await addDoc(collection(db, "chats"), {
+      text: text,
+      createdAt: dateNow,
+      phone: auth.currentUser.phoneNumber,
+      id: auth.currentUser.uid,
+    });
+  }
+  let arr = []
+  useEffect(() => {
+    onSnapshot(collection(db, "chats"),orderBy('createdAt'), (snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          setChats(doc.data());
+        });
+      });
+      // const citiesRef = collection(db, "chats");
+      // return query(citiesRef, orderBy('createdAt'))
+    }, [])
+    arr.push(chats) 
+  console.log(arr);
   return (
     <div className="Container">
       <div className="helper">
-        <button onClick={onAddMarker}>Add Markers</button>
-        <button onClick={logOut}>logOut</button>
+        <div className="chat" onClick={chat}></div>
+        <div className="logOut" onClick={logOut}></div>
       </div>
       <div id="map" ref={mapContainerRef}></div>
+      {
+        flag ? null : (
+          <div className="chats">
+            <div className="display">
+              { arr.length > 1 ? <div>Loading</div>
+              :
+              arr.map((el) => (
+                  <div key={el.id}>{el.text}</div>
+              ))
+              }
+            </div>
+            <div className="in">
+              <input placeholder="write text" onChange={write} value={text}></input>
+              <button onClick={send}>send</button>
+            </div>
+          </div>
+        )
+      }
     </div>
   );
 };
