@@ -1,12 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  collection,
-  setDoc,
-  doc,
-  onSnapshot,
-} from "firebase/firestore";
-import { db, auth, out } from "../Firebase";
-import { logout, signOut } from "firebase/auth";
+import { collection, setDoc, doc, onSnapshot } from "firebase/firestore";
+import { db, auth } from "../Firebase";
+import { signOut } from "firebase/auth";
 
 const markers = [
   {
@@ -18,51 +13,60 @@ const markers = [
     lng: 106.912096,
   },
 ];
+const icons = {
+  me: {
+    url:
+      "https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg",
+    scaledSize: new window.google.maps.Size(50, 50),
+  },
+  other: {
+    url:
+      "https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
+    scaledSize: new window.google.maps.Size(50, 50),
+  },
+};
 const Map = () => {
   const mapContainerRef = useRef();
   const mapRef = useRef();
-  const [logout, setLogout] = useState(false)
   const [makerIndex, setMakerIndex] = useState(0);
-  const [loc, setLoc] = useState([]);
-  const loca = useRef([]);
+  const [loc, setLoc] = useState([47.9138608, 106.912096]);
 
   useEffect(() => {
-    navigator.geolocation.watchPosition((position) => {
+    navigator.geolocation.watchPosition(async (position) => {
       setLoc([position.coords.latitude, position.coords.longitude]);
-      const da = async () => {
-        const citiesRef = collection(db, "current-loctaion");
-        const docRef = await setDoc(doc(citiesRef, auth.currentUser.uid), {
-          lat: position.coords.latitude,
-          lgn: position.coords.longitude,
-          phone: auth.currentUser.phoneNumber,
-          id: auth.currentUser.uid,
-        });
-      };
-      da();
+
+      const citiesRef = collection(db, "current-loctaion");
+      await setDoc(doc(citiesRef, auth.currentUser.uid), {
+        lat: position.coords.latitude,
+        lgn: position.coords.longitude,
+        phone: auth.currentUser.phoneNumber,
+        id: auth.currentUser.uid,
+      });
     });
   }, []);
-  
+
   useEffect(() => {
+    let arr = [];
+    if (!loc.length) return;
     mapRef.current = new window.google.maps.Map(mapContainerRef.current, {
       center: { lat: loc[0], lng: loc[1] },
       zoom: 5,
     });
-    let arr = [];
-    if (!loc.length) return;
     onSnapshot(collection(db, "current-loctaion"), (snapshot) => {
-      console.log(snapshot.docs);
       arr.forEach((el) => {
-        el.setMap(null)
-      })
+        el.setMap(null);
+      });
       snapshot.docs.forEach((doc) => {
         let a = new window.google.maps.Marker({
           position: { lat: doc.data().lat, lng: doc.data().lgn },
           map: mapRef.current,
+          icon: auth.currentUser.uid === doc.data().id ? icons.me : icons.other,
         });
-        arr.push(a)
+        arr.push(a);
       });
     });
   }, [loc]);
+
   const onAddMarker = () => {
     new window.google.maps.Marker({
       position: markers[makerIndex],
@@ -70,12 +74,13 @@ const Map = () => {
     });
     setMakerIndex(makerIndex + 1);
   };
-  const logOut = async() => {
-    await signOut(auth)
-  } 
+
+  const logOut = async () => {
+    await signOut(auth);
+  };
+
   return (
     <div className="Container">
-      <h1>Zenly app</h1>
       <div className="helper">
         <button onClick={onAddMarker}>Add Markers</button>
         <button onClick={logOut}>logOut</button>
