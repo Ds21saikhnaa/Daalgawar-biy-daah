@@ -1,30 +1,35 @@
 import { useEffect, useRef, useState } from "react";
-import { collection, setDoc, doc, onSnapshot, addDoc, query, orderBy } from "firebase/firestore";
+import {
+  collection,
+  setDoc,
+  doc,
+  onSnapshot,
+  addDoc,
+  query,
+  orderBy,
+} from "firebase/firestore";
 import { db, auth } from "../Firebase";
 import { signOut } from "firebase/auth";
-import { async } from "@firebase/util";
 const icons = {
   me: {
-    url:
-      "https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg",
+    url: "https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg",
     scaledSize: new window.google.maps.Size(50, 50),
   },
   other: {
-    url:
-      "https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
+    url: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
     scaledSize: new window.google.maps.Size(50, 50),
   },
 };
 const Map = () => {
   const mapContainerRef = useRef();
   const mapRef = useRef();
-  const [flag, setFlag] = useState(false);
-  const [loc, setLoc] = useState([47.9138608, 106.912096]);
-  const [text, setText] = useState('')
-  const [chats, setChats] = useState([])
+  const [flag, setFlag] = useState(true);
+  const [loc, setLoc] = useState([]);
+  const [text, setText] = useState("");
+  const [chats, setChats] = useState([]);
 
   useEffect(() => {
-    navigator.geolocation.watchPosition(async (position) => {
+    const watchId = navigator.geolocation.watchPosition(async (position) => {
       setLoc([position.coords.latitude, position.coords.longitude]);
 
       const citiesRef = collection(db, "current-loctaion");
@@ -35,15 +40,19 @@ const Map = () => {
         id: auth.currentUser.uid,
       });
     });
+
+    return () => navigator.geolocation.clearWatch(watchId)
   }, [setLoc]);
-  
+
   useEffect(() => {
     let arr = [];
     if (!loc.length) return;
+
     mapRef.current = new window.google.maps.Map(mapContainerRef.current, {
       center: { lat: loc[0], lng: loc[1] },
       zoom: 5,
     });
+
     onSnapshot(collection(db, "current-loctaion"), (snapshot) => {
       arr.forEach((el) => {
         el.setMap(null);
@@ -64,20 +73,20 @@ const Map = () => {
     //   center: { lat: loc[0], lng: loc[1] },
     //   zoom: 5,
     // });
-    console.log('j');
+    console.log("j");
   };
   const chat = () => {
-    setFlag(!flag)
-  }
+    setFlag(!flag);
+  };
   const logOut = async () => {
     await signOut(auth);
   };
 
-  const write =  (e) => {
+  const write = (e) => {
     e.preventDefault();
     setText(e.target.value);
-  }
-  const send = async() => {
+  };
+  const send = async () => {
     let dateNow = new Date();
     await addDoc(collection(db, "chats"), {
       text: text,
@@ -85,19 +94,21 @@ const Map = () => {
       phone: auth.currentUser.phoneNumber,
       id: auth.currentUser.uid,
     });
-  }
-  let arr = []
+  };
+
   useEffect(() => {
-    onSnapshot(collection(db, "chats"),orderBy('createdAt'), (snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          setChats(doc.data());
-        });
+    onSnapshot(query(collection(db, "chats"), orderBy('createdAt')), (snapshot) => {
+      let arr = [];
+
+      snapshot.docs.forEach((doc) => {
+        arr.push(doc.data());
       });
-      // const citiesRef = collection(db, "chats");
-      // return query(citiesRef, orderBy('createdAt'))
-    }, [])
-    arr.push(chats) 
-  console.log(arr);
+      setChats([...arr]);
+    });
+    // const citiesRef = collection(db, "chats");
+    // return query(citiesRef, orderBy('createdAt'))
+  }, []);
+
   return (
     <div className="Container">
       <div className="helper">
@@ -105,24 +116,27 @@ const Map = () => {
         <div className="logOut" onClick={logOut}></div>
       </div>
       <div id="map" ref={mapContainerRef}></div>
-      {
-        flag ? null : (
-          <div className="chats">
-            <div className="display">
-              { arr.length > 1 ? <div>Loading</div>
-              :
-              arr.map((el) => (
-                  <div key={el.id}>{el.text}</div>
+      {flag ? null : (
+        <div className="chats">
+          <div className="display">
+            {
+              // arr.length > 1 ? <div>Loading</div>
+              // :  
+              chats.map((el, i) => (
+                <div key={i}>{el.text}</div>
               ))
-              }
-            </div>
-            <div className="in">
-              <input placeholder="write text" onChange={write} value={text}></input>
-              <button onClick={send}>send</button>
-            </div>
+            }
           </div>
-        )
-      }
+          <div className="in">
+            <input
+              placeholder="write text"
+              onChange={write}
+              value={text}
+            ></input>
+            <button onClick={send}>send</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
