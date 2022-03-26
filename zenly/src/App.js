@@ -4,6 +4,8 @@ import {useState, useEffect} from 'react'
 import { getAuth, onAuthStateChanged } from "firebase/auth"; 
 import { Map } from './component/Map';
 import { Login } from './component/login';
+import { Outlet } from 'react-router-dom';
+
 function App() {
   const [ user, setUser ] = useState(null);
   const [ isLoading, setIsLoading ] = useState(true);
@@ -33,6 +35,11 @@ function App() {
       return <Login />
   }
 
-  return <Map />
+  return (
+      <>
+        <Map />
+        
+      </>
+  )
 }  
 export default App;

@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../Firebase";
 import { signOut } from "firebase/auth";
+import {Link} from 'react-router-dom';
 const icons = {
   me: {
     url: "https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg",
@@ -67,14 +68,9 @@ const Map = () => {
       });
     });
   }, [loc]);
-
-  const onAddMarker = () => {
-    // mapRef.current = new window.google.maps.Map(mapContainerRef.current, {
-    //   center: { lat: loc[0], lng: loc[1] },
-    //   zoom: 5,
-    // });
-    console.log("j");
-  };
+  // const onAddMarker = () => {
+  //   console.log("j");
+  // };
   const chat = () => {
     setFlag(!flag);
   };
@@ -105,13 +101,14 @@ const Map = () => {
       });
       setChats([...arr]);
     });
-    // const citiesRef = collection(db, "chats");
-    // return query(citiesRef, orderBy('createdAt'))
   }, []);
-
+  
   return (
     <div className="Container">
       <div className="helper">
+      <Link to="/profile">
+        <div className="goPro"></div>
+      </Link>
         <div className="chat" onClick={chat}></div>
         <div className="logOut" onClick={logOut}></div>
       </div>
@@ -120,12 +117,14 @@ const Map = () => {
         <div className="chats">
           <div className="display">
             {
-              // arr.length > 1 ? <div>Loading</div>
-              // :  
               chats.map((el, i) => (
-                <div key={i}>{el.text}</div>
-              ))
-            }
+                auth.currentUser.uid === el.id ? (
+                  <div className="left" key={i}>{el.text}</div> 
+                  ) : (
+                  <div className="right" key={i}>{el.text}</div>
+                  )
+                  ))
+                }
           </div>
           <div className="in">
             <input
@@ -137,6 +136,7 @@ const Map = () => {
           </div>
         </div>
       )}
+
     </div>
   );
 };
