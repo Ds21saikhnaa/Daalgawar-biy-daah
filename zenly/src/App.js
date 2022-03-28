@@ -4,7 +4,6 @@ import {useState, useEffect} from 'react'
 import { getAuth, onAuthStateChanged } from "firebase/auth"; 
 import { Map } from './component/Map';
 import { Login } from './component/login';
-import { Outlet } from 'react-router-dom';
 
 function App() {
   const [ user, setUser ] = useState(null);
