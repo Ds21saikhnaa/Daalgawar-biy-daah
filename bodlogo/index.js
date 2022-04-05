@@ -22,12 +22,12 @@
 //     else return false
 // };
 // sum arr
-let addTwoNumbers = function(l1, l2) {
-    let a = l1.reverse().join('')
-    let b = l2.reverse().join('')
-    let sum = parseInt(a) + parseInt(b)
-    let c = sum.toString().split('').map((cur) => parseInt(cur)).reverse();
-    return c
+// let addTwoNumbers = function(l1, l2) {
+//     let a = l1.reverse().join('')
+//     let b = l2.reverse().join('')
+//     let sum = parseInt(a) + parseInt(b)
+//     let c = sum.toString().split('').map((cur) => parseInt(cur)).reverse();
+//     return c
     
-};
-addTwoNumbers([2,4,3], [5,6,4])
+// };
+// addTwoNumbers([2,4,3], [5,6,4])
