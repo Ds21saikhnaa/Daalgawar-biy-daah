@@ -10,14 +10,24 @@
 //     }
 //  };
 // palindrome,
-const isPalindrome = function(x) {
-    let sum = 0, helper = x;
-    if(x < 0) return false
-    while(helper > 0){
-        sum = sum * 10 + helper % 10;
-        helper = Math.floor(helper / 10);
-    }    
-    if(sum === x)return true
-    else if(x === x % 10) return true
-    else return false
+// const isPalindrome = function(x) {
+//     let sum = 0, helper = x;
+//     if(x < 0) return false
+//     while(helper > 0){
+//         sum = sum * 10 + helper % 10;
+//         helper = Math.floor(helper / 10);
+//     }    
+//     if(sum === x)return true
+//     else if(x === x % 10) return true
+//     else return false
+// };
+// sum arr
+let addTwoNumbers = function(l1, l2) {
+    let a = l1.reverse().join('')
+    let b = l2.reverse().join('')
+    let sum = parseInt(a) + parseInt(b)
+    let c = sum.toString().split('').map((cur) => parseInt(cur)).reverse();
+    return c
+    
 };
+addTwoNumbers([2,4,3], [5,6,4])
