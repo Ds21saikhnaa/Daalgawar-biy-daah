@@ -31,20 +31,45 @@
     
 // };
 // addTwoNumbers([2,4,3], [5,6,4])
-const lengthOfLongestSubstring = function(s) {
-    let arr = [];
-    let arrLen = 0;
-    for (let i = 0; i < s.length; i++) {
-        const currentCharacterPosition = arr.indexOf(s[i]);
-        if (currentCharacterPosition !== -1) {
-            arr.splice(0, currentCharacterPosition + 1);
-        }
-        arr.push(s[i]);
-        arrLen = Math.max(
-            arrLen,
-            arr.length
-        );
+// const lengthOfLongestSubstring = function(s) {
+//     let arr = [];
+//     let arrLen = 0;
+//     for (let i = 0; i < s.length; i++) {
+//         const currentCharacterPosition = arr.indexOf(s[i]);
+//         if (currentCharacterPosition !== -1) {
+//             arr.splice(0, currentCharacterPosition + 1);
+//         }
+//         arr.push(s[i]);
+//         arrLen = Math.max(
+//             arrLen,
+//             arr.length
+//         );
+//     }
+//     return arrLen;
+// };
+// console.log(lengthOfLongestSubstring('aaa'));
+const romanToInt = function(s) {
+    const sym = { 
+        'I': 1,
+        'V': 5,
+        'X': 10,
+        'L': 50,
+        'C': 100,
+        'D': 500,
+        'M': 1000
     }
-    return arrLen;
+    let sum = 0;
+    for(let i = 0; i <= s.length - 1; i ++ ){
+        const cur = sym[s[i]];
+        const next = sym[s[i+1]];
+        if (cur < next){
+            sum += next - cur // IV -> 5 - 1 = 4
+            i++
+        } else {
+            sum += cur
+        }
+    }
+    console.log(sum);
+    return sum
 };
-console.log(lengthOfLongestSubstring('aaa'));
+romanToInt('MCMXCIV')
