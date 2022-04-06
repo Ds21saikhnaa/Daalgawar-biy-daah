@@ -31,3 +31,20 @@
     
 // };
 // addTwoNumbers([2,4,3], [5,6,4])
+const lengthOfLongestSubstring = function(s) {
+    let arr = [];
+    let arrLen = 0;
+    for (let i = 0; i < s.length; i++) {
+        const currentCharacterPosition = arr.indexOf(s[i]);
+        if (currentCharacterPosition !== -1) {
+            arr.splice(0, currentCharacterPosition + 1);
+        }
+        arr.push(s[i]);
+        arrLen = Math.max(
+            arrLen,
+            arr.length
+        );
+    }
+    return arrLen;
+};
+console.log(lengthOfLongestSubstring('aaa'));
