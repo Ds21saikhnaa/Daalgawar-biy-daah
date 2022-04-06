@@ -69,7 +69,6 @@ const romanToInt = function(s) {
             sum += cur
         }
     }
-    console.log(sum);
     return sum
 };
 romanToInt('MCMXCIV')
