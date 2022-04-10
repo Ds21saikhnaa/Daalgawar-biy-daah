@@ -48,27 +48,153 @@
 //     return arrLen;
 // };
 // console.log(lengthOfLongestSubstring('aaa'));
-const romanToInt = function(s) {
-    const sym = { 
-        'I': 1,
-        'V': 5,
-        'X': 10,
-        'L': 50,
-        'C': 100,
-        'D': 500,
-        'M': 1000
-    }
-    let sum = 0;
-    for(let i = 0; i <= s.length - 1; i ++ ){
-        const cur = sym[s[i]];
-        const next = sym[s[i+1]];
-        if (cur < next){
-            sum += next - cur // IV -> 5 - 1 = 4
-            i++
-        } else {
-            sum += cur
-        }
-    }
-    return sum
+// const romanToInt = function(s) {
+//     const sym = { 
+//         'I': 1,
+//         'V': 5,
+//         'X': 10,
+//         'L': 50,
+//         'C': 100,
+//         'D': 500,
+//         'M': 1000
+//     }
+//     let sum = 0;
+//     for(let i = 0; i <= s.length - 1; i ++ ){
+//         const cur = sym[s[i]];
+//         const next = sym[s[i+1]];
+//         if (cur < next){
+//             sum += next - cur // IV -> 5 - 1 = 4
+//             i++
+//         } else {
+//             sum += cur
+//         }
+//     }
+//     return sum
+// };
+// romanToInt('MCMXCIV')
+// const removeDuplicates = function(nums) {
+//     let i = 0;
+//     let j = 1;
+//     while(j < nums.length){
+//         if(nums[i] !== nums[j])
+//             nums[++ i] = nums[j];
+//         j ++
+//     }
+//     return i + 1
+// };
+// console.log(topKFrequent([1,1,1,2,2,5])); 
+// const longestCommonPrefix = function(strs){
+//     if(!strs.length) return '';
+//     for(let i = 0; i < strs[0].length; i++){
+//         for(let j = 0; j < strs.length; j ++){
+//             if(strs[0][i] !== strs[j][i]){
+//                 return strs[0].slice(0, i);
+//             }
+//         }
+//     }
+//     return strs[0]
+// }
+// console.log(longestCommonPrefix(["flower","flow","flight"]));
+// const addTwoNumbers = function(l1, l2) {
+//     let current = new ListNode();
+//     let result = current; 
+//     let carry = 0
+//     while(l1 || l2 || carry) {
+//         let sum1 = 0
+//         if(l1) {
+//             sum1 += l1.val;
+//             l1 = l1.next;
+//         }   
+//         let sum2 = 0
+//         if(l2) {
+//             sum2 += l2.val;
+//             l2 = l2.next;
+//         }
+//         const sum = sum1 + sum2 + carry;
+//         carry = Math.floor(sum / 10)
+//         const dg = sum % 10
+//         const newList = new ListNode(dg)
+//         current.next = newList
+//         current = newList
+//     }
+//     return result.next
+// };
+// var isValid = function(s) {
+//       let arr = []
+//     for(let i = 0; i <= s.length - 1; i ++){
+//         const current = s[i]
+//         console.log('-->',current);
+//         if(current === '('){
+//             arr.push(')')
+//         }else if(current === '['){
+//             arr.push(']')
+//         }else if(current === '{'){
+//             arr.push('}')
+//         }else{
+//             const pop = arr.pop()
+//             console.log('pop',pop, 'cur' , current);
+//             if(current !== pop) return false 
+//         }
+//     }
+//     return !arr.length ;
+// };
+// console.log(isValid('{}()')); 
+// const removeElement = function(nums, val) {
+//     let i = 0;
+//     for(let j = 0; j < nums.length; j++){
+//         if(nums[j] !== val){
+//             nums[i] = nums[j]
+//             i++;
+//         }
+//     }
+//     return i
+// };
+// // removeElement([1,2,2,3,0,4,2], 2)
+// console.log(removeElement([1,2,2,3,0,4,2], 2));
+// var calPoints = function(ops) {
+//     let arr = [];
+//     for(let i = 0; i < ops.length; i ++){ 
+//         if(ops[i] === 'C'){
+//             arr.pop();
+//         }else if(ops[i] === 'D'){
+//             arr.push(2 * arr[arr.length - 1])
+//         }else if(ops[i] === '+'){
+//             arr.push(parseInt(arr[arr.length-2]) + parseInt(arr[arr.length-1]));
+//         }else{
+//             arr.push(parseInt(ops[i]))
+//         }
+//     }
+//     return arr.reduce((acc, cur) => acc + cur);
+// };
+// calPoints(["5","2","C","D","+"])
+// calPoints(["5","-2","4","C","D","9","+","+"])
+// var findMedianSortedArrays = function(nums1, nums2) {
+//     let arr = nums1.concat(nums2).sort()
+//     let l = arr.length/2
+//     let sum;
+//     if(arr.length === 3){
+//         return arr[1].toFixed(5)
+//     }
+//     if(l % 2 === 0){
+//         sum = (arr[l-1] + arr[l])/2
+//         return sum.toFixed(5)
+//     }else{
+//         l = l+0.5
+//         console.log(arr[l-1].toFixed(5));
+//         return arr[l-1].toFixed(5)
+//     }
+       
+// };
+// findMedianSortedArrays([2,3,5], [1,4])
+var findMedianSortedArrays = function(nums1, nums2) {
+    let arr = nums1.concat(nums2).sort((a, b) => a - b)
+    let l = Math.floor(arr.length/2)
+    if(arr.length % 2 !== 0){
+        console.log(arr[l]);
+        return arr[l]
+    }else{
+        console.log((arr[l - 1]+ arr[l])/2);
+        return (arr[l - 1] + arr[l])/2
+    }   
 };
-romanToInt('MCMXCIV')
+findMedianSortedArrays([3], [-2,-1]) //1,2,3,4 -> 0,1,2,3
