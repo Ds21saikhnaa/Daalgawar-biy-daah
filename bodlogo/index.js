@@ -186,15 +186,90 @@
        
 // };
 // findMedianSortedArrays([2,3,5], [1,4])
-var findMedianSortedArrays = function(nums1, nums2) {
-    let arr = nums1.concat(nums2).sort((a, b) => a - b)
-    let l = Math.floor(arr.length/2)
-    if(arr.length % 2 !== 0){
-        console.log(arr[l]);
-        return arr[l]
-    }else{
-        console.log((arr[l - 1]+ arr[l])/2);
-        return (arr[l - 1] + arr[l])/2
-    }   
-};
-findMedianSortedArrays([3], [-2,-1]) //1,2,3,4 -> 0,1,2,3
+// var findMedianSortedArrays = function(nums1, nums2) {
+//     let arr = nums1.concat(nums2).sort((a, b) => a - b)
+//     let l = Math.floor(arr.length/2)
+//     if(arr.length % 2 !== 0){
+//         console.log(arr[l]);
+//         return arr[l]
+//     }else{
+//         console.log((arr[l - 1]+ arr[l])/2);
+//         return (arr[l - 1] + arr[l])/2
+//     }   
+// };
+// findMedianSortedArrays([3], [-2,-1]) //1,2,3,4 -> 0,1,2,3
+// var solveSudoku = function(board) {
+//     solve(board);
+// };
+
+// const solve = (board) => {
+//   for (let i = 0; i < 9; i++) {
+//     for (let j = 0; j < 9; j++) {
+//       if (board[i][j] !== '.') continue;
+//       for (let k = 1; k <= 9; k++) {
+//         if (isValid(board, i, j, '' + k)) {
+//             board[i][j] = '' + k;
+//           if (solve(board)) {
+//             return true;
+//           } else {
+//             board[i][j] = '.';
+//           }
+//         }
+//       }
+//       return false;
+//     }
+//   }
+// //   console.log(board);
+//   return true;
+// };
+
+// const isValid = (board, i, j, num) => {
+//     for (let k = 0; k < 9; k++) {
+//         if (board[i][k] === num) return false;
+//         if (board[k][j] === num) return false;
+//         if (board[Math.floor(i / 3) * 3 + Math.floor(k / 3)][Math.floor(j / 3) * 3 + (k % 3)] === num) return false;
+//     }
+//     return true;
+// };
+var solveSudoku = function(board){
+    let rows = Array.from(new Array(9), () => new Array(10).fill(0));
+    let cols = Array.from(new Array(9), () => new Array(10).fill(0));
+    let boxes = Array.from(new Array(9), () => new Array(10).fill(0));
+    for(let i = 1; i < 9; i ++){
+        for(let j = 1; j < 9; j ++){
+            if(board[i][j] !== '.'){
+                let num = parseInt(board[i][j])
+                let boardX = Math.floor(j / 3);
+                let boardY = Math.floor(i / 3);
+                rows[i][num] = 1;
+                cols[j][num] = 1;
+                boxes[boardY * 3 + boardX][num] = 1;
+            }
+        }
+    }
+    give(board, 0, 0 , rows, cols , boxes)
+}
+const give = (board, x, y, rows, cols, boxes) => {
+    if(y === 9) return true;
+    let nextX = (x + 1) % 9;
+    let nextY = nextX === 0 ? y + 1 : y;
+    if (board[y][x] !== '.') return give(board, nextX, nextY, rows, cols, boxes);
+    for (let i = 1; i <= 9; i++) {
+        let boX = Math.floor(x / 3);
+        let boY = Math.floor(y / 3);
+        let box_index = boY * 3 + boX;
+        if (!rows[y][i] && !cols[x][i] && !boxes[box_index][i]) {
+            rows[y][i] = 1;
+            cols[x][i] = 1;
+            boxes[box_index][i] = 1;
+            board[y][x] = i.toString();
+            if (give(board, nextX, nextY, rows, cols, boxes)) return true;
+            board[y][x] = '.';
+            boxes[box_index][i] = 0;
+            cols[x][i] = 0;
+            rows[y][i] = 0;
+        }
+    }
+    return false;
+}
+solveSudoku([["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]); 
