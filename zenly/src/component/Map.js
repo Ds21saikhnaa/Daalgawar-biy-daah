@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../Firebase";
 import { signOut } from "firebase/auth";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const icons = {
   me: {
     url: "https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg",
@@ -25,7 +25,7 @@ const Map = () => {
   const mapContainerRef = useRef();
   const mapRef = useRef();
   const [flag, setFlag] = useState(true);
-  const [loc, setLoc] = useState([]);
+  const [loc, setLoc] = useState([50, 100]);
   const [text, setText] = useState("");
   const [chats, setChats] = useState([]);
 
@@ -102,13 +102,13 @@ const Map = () => {
       setChats([...arr]);
     });
   }, []);
-  
+
   return (
     <div className="Container">
       <div className="helper">
-      <Link to="/profile">
-        <div className="goPro"></div>
-      </Link>
+        <Link to="/profile">
+          <div className="goPro"></div>
+        </Link>
         <div className="chat" onClick={chat}></div>
         <div className="logOut" onClick={logOut}></div>
       </div>
@@ -119,12 +119,12 @@ const Map = () => {
             {
               chats.map((el, i) => (
                 auth.currentUser.uid === el.id ? (
-                  <div className="left" key={i}>{el.text}</div> 
-                  ) : (
+                  <div className="left" key={i}>{el.text}</div>
+                ) : (
                   <div className="right" key={i}>{el.text}</div>
-                  )
-                  ))
-                }
+                )
+              ))
+            }
           </div>
           <div className="in">
             <input
